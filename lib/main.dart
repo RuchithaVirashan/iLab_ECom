@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'dart:ui' as ui;
 
-import 'screen/main/main_screen.dart';
+import 'bloc/product_list/product_list_bloc.dart';
+import 'screen/item_details_screen.dart';
+import 'screen/main_screen.dart';
 import 'utils/theme.dart';
 
 void main() {
@@ -17,15 +20,20 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
         designSize: const ui.Size(414, 896),
         builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'ecom',
-            theme: AppTheme.lightTheme,
-            // home: const MainScreen(
-            //   selectedIndex: 0,
-            // ),
-            home: Container(
-              color: Colors.green,
+          return MultiBlocProvider(
+            providers: [
+              BlocProvider(create: (_) => ProductListBloc()),
+            ],
+            child: MaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: 'ecom',
+              theme: AppTheme.lightTheme,
+              routes: {
+                '/details': (context) => const ItemDetailsSceen(),
+              },
+              home: const MainScreen(
+                selectedIndex: 0,
+              ),
             ),
           );
         });

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:ilabecom/screen/cart_screen.dart';
+
+import 'home_screen.dart';
 
 class MainScreen extends StatefulWidget {
   final int selectedIndex;
@@ -21,8 +24,8 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: [
-        // const QuestionAnswerScreen(),
-        // const AddQuestionScreen(),
+        const HomeScreen(),
+        const CartScreen(),
       ][_selectedIndex],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex,
