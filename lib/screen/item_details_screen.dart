@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:ilabecom/components/common/default_text.dart';
 import 'package:ilabecom/model/product_list_model.dart';
 
+import '../bloc/cart/cart_bloc.dart';
 import '../bloc/product_list/product_list_bloc.dart';
 import '../components/common/back_app_bar.dart';
 import '../components/common/button.dart';
@@ -91,7 +92,10 @@ class _ItemDetailsSceenState extends State<ItemDetailsSceen> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
             child: ButtonWidget(
-              onPressed: () async {},
+              onPressed: () async {
+                final cartBloc = BlocProvider.of<CartBloc>(context);
+                cartBloc.add(AddToCart(productItem!, context));
+              },
               minHeight: 55.h,
               buttonName: 'Add to Cart',
               tcolor: Colors.white,
