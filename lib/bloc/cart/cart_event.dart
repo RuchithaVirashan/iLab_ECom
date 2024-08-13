@@ -21,3 +21,9 @@ class RemoveFromCart extends CartEvent {
 
   RemoveFromCart(this.index, this.context);
 }
+
+class ClearCart extends CartEvent {
+  final BuildContext context;
+
+  ClearCart(this.context);
+}

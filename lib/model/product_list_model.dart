@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-// Model class for individual product item
 class ProductItem {
   final String name;
   final String image;
@@ -14,7 +13,6 @@ class ProductItem {
     required this.id,
   });
 
-  // Factory constructor to create a ProductItem from JSON
   factory ProductItem.fromJson(Map<String, dynamic> json) {
     return ProductItem(
       name: json['name'],
@@ -24,7 +22,6 @@ class ProductItem {
     );
   }
 
-  // Method to convert a ProductItem to JSON
   Map<String, dynamic> toJson() {
     return {
       'name': name,
@@ -35,13 +32,11 @@ class ProductItem {
   }
 }
 
-// Model class for handling a list of ProductItems
 class ProductItemList {
   final List<ProductItem> items;
 
   ProductItemList({required this.items});
 
-  // Factory constructor to create a ProductItemList from JSON
   factory ProductItemList.fromJson(String jsonString) {
     final List<dynamic> jsonData = json.decode(jsonString);
     final List<ProductItem> productList = jsonData
@@ -50,7 +45,6 @@ class ProductItemList {
     return ProductItemList(items: productList);
   }
 
-  // Method to convert a ProductItemList to JSON
   String toJson() {
     final List<Map<String, dynamic>> jsonData =
         items.map((item) => item.toJson()).toList();

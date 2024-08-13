@@ -49,6 +49,16 @@ class CartBloc extends Bloc<CartEvent, CartState> {
         showErrorDialog(event.context, e.toString());
       }
     });
+
+    on<ClearCart>((event, emit) async {
+      try {
+        cartList.clear();
+        emit(CartLoaded(cartList));
+      } catch (e) {
+        log("Error: $e");
+        showErrorDialog(event.context, e.toString());
+      }
+    });
   }
 
   Future<void> removeItem(int index, BuildContext context) async {

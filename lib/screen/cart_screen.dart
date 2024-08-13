@@ -5,6 +5,7 @@ import 'package:ilabecom/model/product_list_model.dart';
 
 import '../bloc/cart/cart_bloc.dart';
 import '../components/cart/cart_item_card.dart';
+import '../components/cart/no_item_message.dart';
 import '../components/cart/order_summary.dart';
 import '../components/common/back_app_bar.dart';
 import '../components/common/button.dart';
@@ -45,38 +46,45 @@ class _CartScreenState extends State<CartScreen> {
       ),
       body: Padding(
         padding: EdgeInsets.all(16.w),
-        child: Column(
-          children: [
-            Expanded(
-              child: ListView.builder(
-                itemCount: cartItems.length,
-                itemBuilder: (context, index) {
-                  return CartItemCard(
-                    index: index,
-                    cartItems: cartItems,
-                  );
-                },
+        child: cartItems.isEmpty
+            ? const NoItemMsg()
+            : Column(
+                children: [
+                  Expanded(
+                    child: ListView.builder(
+                      itemCount: cartItems.length,
+                      itemBuilder: (context, index) {
+                        return CartItemCard(
+                          index: index,
+                          cartItems: cartItems,
+                        );
+                      },
+                    ),
+                  ),
+                  SizedBox(height: 8.h),
+                  OrderSummaryDet(cartItems: cartItems),
+                ],
               ),
-            ),
-            SizedBox(height: 8.h),
-            OrderSummaryDet(cartItems: cartItems),
-          ],
-        ),
       ),
-      bottomNavigationBar: SizedBox(
-        height: 70.h,
-        child: BottomAppBar(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.w),
-            child: ButtonWidget(
-              onPressed: () {},
-              minHeight: 55.h,
-              buttonName: 'Checkout',
-              tcolor: Colors.white,
-              bcolor: const Color(0xFF154478),
-              borderColor: Colors.white,
-              radius: 15.r,
-              fcolor: Colors.grey,
+      bottomNavigationBar: Visibility(
+        visible: cartItems.isNotEmpty,
+        child: SizedBox(
+          height: 70.h,
+          child: BottomAppBar(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: ButtonWidget(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/checkout');
+                },
+                minHeight: 55.h,
+                buttonName: 'Checkout',
+                tcolor: Colors.white,
+                bcolor: const Color(0xFF154478),
+                borderColor: Colors.white,
+                radius: 15.r,
+                fcolor: Colors.grey,
+              ),
             ),
           ),
         ),
