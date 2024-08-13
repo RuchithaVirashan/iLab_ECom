@@ -29,7 +29,6 @@ class _ItemDetailsSceenState extends State<ItemDetailsSceen> {
     productListBloc.add(FetchProductDetails());
     productListBloc.stream.listen((event) {
       if (event is ProductDtailsState) {
-        log("product ${event.item.name}");
         productItem = event.item;
         setState(() {});
       }

@@ -1,7 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:developer';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:ilabecom/model/product_list_model.dart';
 
+import '../../components/status/error.dart';
 import '../../utils/constants.dart';
 // ignore: depend_on_referenced_packages
 import 'package:dio/dio.dart';
@@ -35,9 +39,11 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           emit(ItemsLoadedState(items));
         } else {
           log("Error: ${response.statusCode}");
+          showErrorDialog(event.context, '${response.statusMessage}');
         }
       } catch (e) {
         log("Error: $e");
+        showErrorDialog(event.context, e.toString());
       }
     });
 

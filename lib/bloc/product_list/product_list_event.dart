@@ -2,7 +2,11 @@ part of 'product_list_bloc.dart';
 
 abstract class ProductListEvent {}
 
-class FetchProductListEvent extends ProductListEvent {}
+class FetchProductListEvent extends ProductListEvent {
+  final BuildContext context;
+
+  FetchProductListEvent(this.context);
+}
 
 class PassProductDetails extends ProductListEvent {
   final ProductItem item;

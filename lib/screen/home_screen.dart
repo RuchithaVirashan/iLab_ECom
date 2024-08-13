@@ -26,11 +26,10 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     productListBloc = BlocProvider.of<ProductListBloc>(context);
-    productListBloc.add(FetchProductListEvent());
+    productListBloc.add(FetchProductListEvent(context));
 
     productListBloc.stream.listen((event) {
       if (event is ItemsLoadedState) {
-        log("newww ${event.items}");
         productList = event.items;
         setState(() {});
       }
