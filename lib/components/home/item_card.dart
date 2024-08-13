@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../bloc/cart/cart_bloc.dart';
+import '../../screen/main_screen.dart';
 import '../common/button.dart';
 import '../common/default_text.dart';
 import '../../model/product_list_model.dart';
@@ -39,7 +42,6 @@ class ItemCard extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(14),
                 child: Image.network(
-                  // Replace with your actual image URL
                   prod[index].image,
                   fit: BoxFit.cover,
                   width: double.infinity,
@@ -64,7 +66,11 @@ class ItemCard extends StatelessWidget {
               ),
               const Spacer(),
               ButtonWidget(
-                onPressed: () async {},
+                onPressed: () async {
+                  final cartBloc = BlocProvider.of<CartBloc>(context);
+                  cartBloc.add(AddToCart(prod[index], context));
+                
+                },
                 minHeight: 30.h,
                 buttonName: 'Add to Cart',
                 tcolor: Colors.white,

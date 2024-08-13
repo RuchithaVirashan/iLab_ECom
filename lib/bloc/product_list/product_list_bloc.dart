@@ -27,6 +27,8 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
 
         String apiUrl = '${Constants.baseurl}product';
 
+        emit(ProductListLoading(true));
+
         response = await Dio().get(
           apiUrl,
         );
@@ -37,19 +39,23 @@ class ProductListBloc extends Bloc<ProductListEvent, ProductListState> {
           }
 
           emit(ItemsLoadedState(items));
+          emit(ProductListLoading(false));
         } else {
           log("Error: ${response.statusCode}");
+          emit(ProductListLoading(false));
+
           showErrorDialog(event.context, '${response.statusMessage}');
         }
       } catch (e) {
         log("Error: $e");
+        emit(ProductListLoading(false));
+
         showErrorDialog(event.context, e.toString());
       }
     });
 
     on<PassProductDetails>((event, emit) {
       productItem = event.item;
-      emit(ProductDtailsState(event.item));
     });
 
     on<FetchProductDetails>((event, emit) {

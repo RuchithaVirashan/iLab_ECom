@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:ilabecom/screen/checkout_screen.dart';
 import 'dart:ui' as ui;
 
+import 'bloc/cart/cart_bloc.dart';
 import 'bloc/product_list/product_list_bloc.dart';
+import 'bloc/user_data/user_data_bloc.dart';
 import 'screen/item_details_screen.dart';
 import 'screen/main_screen.dart';
 import 'utils/theme.dart';
@@ -23,6 +26,8 @@ class MyApp extends StatelessWidget {
           return MultiBlocProvider(
             providers: [
               BlocProvider(create: (_) => ProductListBloc()),
+              BlocProvider(create: (_) => CartBloc()),
+              BlocProvider(create: (_) => UserDataBloc()),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,
@@ -30,6 +35,7 @@ class MyApp extends StatelessWidget {
               theme: AppTheme.lightTheme,
               routes: {
                 '/details': (context) => const ItemDetailsSceen(),
+                '/checkout': (context) => const CheckoutScreen(),
               },
               home: const MainScreen(
                 selectedIndex: 0,

@@ -13,3 +13,9 @@ class ProductDtailsState extends ProductListState {
   final ProductItem item;
   ProductDtailsState(this.item);
 }
+
+class ProductListLoading extends ProductListState {
+  final bool isLoading;
+
+  ProductListLoading(this.isLoading);
+}

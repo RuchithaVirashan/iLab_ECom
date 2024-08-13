@@ -5,56 +5,59 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
   final String? Function(String?)? validate;
-  final TextInputType? keybordType;
-  final int? maxLine;
-  final void Function(dynamic value)? onChanged;
+  final bool? autofocus;
+  final bool? isReadOnly;
+  final TextInputType? keyBoardType;
+  final FocusNode? focusNode;
+  final ValueChanged<String>? onChanged;
+  final TextInputAction? textInputAction;
+  final ValueChanged<String>? onFieldSubmitted;
+  final VoidCallback? onTap;
 
   const CustomTextField({
     super.key,
     required this.controller,
     required this.hintText,
     this.validate,
-    this.keybordType,
-    this.maxLine,
+    this.autofocus,
+    this.isReadOnly,
+    this.keyBoardType,
+    this.focusNode,
     this.onChanged,
+    this.onFieldSubmitted,
+    this.textInputAction,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(context);
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15.r),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0x23154378),
-            blurRadius: 50.r,
-            offset: const Offset(12, 24),
-            spreadRadius: 0,
-          )
-        ],
-      ),
-      child: TextFormField(
-        controller: controller,
-        decoration: InputDecoration(
-          hintText: hintText,
-          hintStyle: const TextStyle(color: Color(0x6022242E)),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15.r),
-          ),
-          contentPadding: EdgeInsets.only(
-            left: 25.w,
-            top: 15.h,
-            bottom: 15.h,
-          ),
-          fillColor: const Color(0xFFFFFFFF),
-          filled: true,
+
+    return TextFormField(
+      controller: controller,
+      focusNode: focusNode,
+      onChanged: onChanged,
+      autofocus: autofocus ?? false,
+      readOnly: isReadOnly ?? false,
+      decoration: InputDecoration(
+        hintText: hintText,
+        hintStyle: const TextStyle(color: Color(0x6022242E)),
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(10.r),
         ),
-        validator: validate,
-        keyboardType: keybordType,
-        maxLines: maxLine,
-        onChanged: onChanged,
+        contentPadding: EdgeInsets.only(
+          left: 10.w,
+          top: 15.h,
+          bottom: 15.h,
+        ),
+        fillColor: const Color(0xFFFFFFFF),
+        filled: true,
       ),
+      validator: validate,
+      keyboardType: keyBoardType,
+      onFieldSubmitted: onFieldSubmitted,
+      textInputAction: textInputAction,
+      onTap: onTap,
     );
   }
 }

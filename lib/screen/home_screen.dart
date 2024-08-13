@@ -22,6 +22,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   List<ProductItem> productList = [];
 
+  bool isLoading = false;
+
   @override
   void initState() {
     super.initState();
@@ -31,6 +33,13 @@ class _HomeScreenState extends State<HomeScreen> {
     productListBloc.stream.listen((event) {
       if (event is ItemsLoadedState) {
         productList = event.items;
+        setState(() {});
+      }
+    });
+
+    productListBloc.stream.listen((event) {
+      if (event is ProductListLoading) {
+        isLoading = event.isLoading;
         setState(() {});
       }
     });
@@ -82,7 +91,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       vertical: 10.h,
                       horizontal: 1.w,
                     ),
-                    child: productList.isEmpty
+                    child: isLoading
                         ? const Center(child: CircularProgressIndicator())
                         : GridView.builder(
                             physics: const NeverScrollableScrollPhysics(),
@@ -100,7 +109,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               return ItemCard(
                                 prod: productList,
                                 onPressed: () {
-                                  log('clicked ${productList[index]}');
                                   productListBloc.add(
                                       PassProductDetails(productList[index]));
                                   Navigator.of(context).pushNamed('/details');

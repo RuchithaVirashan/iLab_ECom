@@ -6,15 +6,16 @@ class ValidateService {
     return null;
   }
 
-  String? validatePrice(String value) {
-    String pattern = r'^\d+(?:\.\d{1,2})?$';
+  String? validatePhoneNumber(String value) {
+    String pattern = r'^\d{10}$';
     RegExp regExp = RegExp(pattern);
-    String? isEmpty = isEmptyField(value);
 
-    if (isEmpty != null) {
-      return isEmpty;
+    if (value.isEmpty) {
+      return 'Please enter a mobile number';
+    } else if (value.length != 10) {
+      return 'Telephone number should be 10 characters long';
     } else if (!regExp.hasMatch(value)) {
-      return "Invalid price";
+      return 'Invalid mobile number';
     }
     return null;
   }
